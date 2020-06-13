@@ -9,7 +9,6 @@ import org.springframework.messaging.Message;
 
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class ConsumerApplication {
@@ -20,18 +19,9 @@ public class ConsumerApplication {
   }
 
   @Bean
-  public Consumer<Message<List<byte[]>>> logMessages() {
-    return message -> {
-      LOGGER.info("Batch Message: " + message.getPayload().stream().map(String::new).collect(Collectors.toList()));
+  public Consumer<Message<List<SimpleEntity>>> logMessages() {
+    return messages -> {
+      LOGGER.info("Batch Message: " + messages);
     };
   }
-
-  /*
-  @Bean
-  public Consumer<SimpleEntity> logMessages() {
-    return message -> {
-      LOGGER.info("Message: " + message);
-    };
-  }
-  */
 }
